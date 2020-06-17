@@ -12,10 +12,15 @@ services:
   nginx:
     image: nginx:latest
     depends_on:
-      - testservice
+      - my-service
+    environment:
+      # Define the nginx target here
+      - TARGET_HOST_AND_PORT=my-service:80
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-  testservice:
+      - ./nginx/templates:/etc/nginx/templates:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  # Add your target service here
+  my-service:
     image: nginx:latest
     ports:
       - 80:80
